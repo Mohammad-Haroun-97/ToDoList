@@ -7,18 +7,24 @@ import {applicationContext} from '../../context/sittingsContext'
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import { v4 as uuid } from 'uuid';
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container,Form } from 'react-bootstrap';
 import { When } from 'react-if';
+import Auth from './Auth';
 
+// localStorage.setItem('local',{})
 const ToDo = () => {
   const settings=useContext(applicationContext)
 
   const [list, setList] = useState([]);
   const [incomplete, setIncomplete] = useState([]);
   const { handleChange, handleSubmit } = useForm(addItem);
+ 
+  const [localShowFlag,setLocalShowFlag]=useState(false)
+  const [localPerScreen,setLocalPerScreen]=useState(2)
 
   const [completedListtt,setcompletedListtt]=useState([])
   
+ 
 
   function addItem(item) {
     console.log(item);
@@ -34,10 +40,20 @@ const ToDo = () => {
 
   function toggleComplete(id) {
 
-    const items = list.map( item => {
+    const items = list.map( (item,index) => {
       if ( item.id == id ) {
         item.complete = ! item.complete;
-        setcompletedListtt([...completedListtt,item])
+        if (item.complete==true) {
+          setcompletedListtt([...completedListtt,item])
+          
+        }if (item.complete==false){
+          
+          setcompletedListtt([completedListtt, ...list.slice(index)])
+        
+          // setcompletedListtt([...completedListtt,item])
+
+        }
+        
       }
       
       return item;
@@ -47,24 +63,29 @@ const ToDo = () => {
     
   }
 
-  // function completedHandeler(item) {
-  //     return setcompletedListtt([...completedListtt,item])
-  // }
 
-  function showCompletedList() {
 
-    console.log('completedList000000000000000000',completedListtt);
+   function showCompletedList() {
+     
+    // console.log('completedList000000000000000000',completedListtt);
+    setLocalShowFlag( true)
+    // settings.setCompletedListFlag(true)
     
-    settings.setCompletedListFlag(true)
-    
-
-
 console.log('settings.completedListFlag',settings.completedListFlag);
 
-    
+  let test=JSON.stringify(localShowFlag)
+  localStorage.setItem('flag',test )
+
   }
-  function HideCompleted() {
-    settings.setCompletedListFlag(false)
+   function HideCompleted() {
+   
+     setLocalShowFlag(false)
+    // settings.setCompletedListFlag(false)
+    
+  
+      let test=JSON.stringify(localShowFlag)
+      localStorage.setItem('flag',test )
+    
   }
 
  
@@ -75,7 +96,19 @@ console.log('settings.completedListFlag',settings.completedListFlag);
     document.title = `To Do List: ${incomplete}`;
   }, [list]);
 
+  function perScreenHandeler(event) {
+    event.preventDefault()
+    settings.setNumberOfItemsToDisplay(parseInt(event.target.itemsPerScreen.value) )
+    setLocalPerScreen(parseInt(event.target.itemsPerScreen.value))
 
+    localStorage.setItem('perScreen',JSON.stringify(event.target.itemsPerScreen.value))
+  }
+if (!localStorage.getItem('flag')) {
+  localStorage.setItem('flag' ,JSON.stringify(false) )
+  
+}
+  
+  
   
   return (
     <>
@@ -86,28 +119,36 @@ console.log('settings.completedListFlag',settings.completedListFlag);
       <br/>
       <br/>
       <Container>
-      <Button style={{marginLeft:'50px' ,marginRight:"30px"}} onClick={showCompletedList}>Show Completed List</Button>
+        
+
+  
+
+      <Button style={{marginLeft:'50px' ,marginRight:"30px"}} onClick={showCompletedList}>Hide Completed List</Button>
       
-      <Button style={{paddingLeft:'50px' ,marginRight:"30px" }} onClick={HideCompleted}>Hide Completed List</Button>
+      <Button style={{paddingLeft:'50px' ,marginRight:"30px" }} onClick={HideCompleted}>Show Completed List</Button>
+      <br/>
+      <br/> 
+      <Form onSubmit={perScreenHandeler}>
+      <Form.Label>Number Of Items Per Screen</Form.Label>
+    <Form.Control type="number" name="itemsPerScreen" id="itemsPerScreen" />
+    <Button type='submit'>Enter</Button>
+    </Form>
       </Container>
       <br/>
       <br/>
       
-      {settings.completedListFlag && < CompletedList completedListtt={completedListtt} />}
+      {localStorage.getItem('flag')==='true' && < CompletedList completedListtt={completedListtt} />}
+
+      <Auth capability="create">
 
       <FormToDo handleSubmit={handleSubmit} handleChange={handleChange} />
 
+      </Auth>
+
+      <Auth capability="read" >
+
       <List list={list} toggleComplete={toggleComplete}  />
-
-      {/* <When condition={settings.completedListFlag==true}> */}
-     
-      
-      {/* </When> */}
-
-      
-
-      
-      
+      </Auth>
 
     </>
   );

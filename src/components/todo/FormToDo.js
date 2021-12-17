@@ -24,6 +24,8 @@ export default function FormToDo(props) {
   <Form.Group className="mb-3" controlId="formBasicPassword">
     <Form.Label>Difficulty</Form.Label>
     <Form.Control onChange={handleChange} defaultValue={3} type="range" min={1} max={5} name="difficulty" />
+    {/* <Form.Label>Range</Form.Label> */}
+  {/* <Form.Range /> */}
   </Form.Group>
  
   <Button variant="primary" type="submit">
@@ -31,9 +33,7 @@ export default function FormToDo(props) {
   </Button>
 </Form>
 </Container>
-        
-      
-        
+    
         </>
     )
     
