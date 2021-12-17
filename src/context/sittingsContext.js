@@ -6,25 +6,25 @@ export const applicationContext=React.createContext()
 
 
 export default  function Settings(props) {
-const [completedListFlag,setCompletedListFlag]=useState()
+const [completedListFlag,setCompletedListFlag]=useState(true)
 const [HidecompletedListFlag,setHidecompletedListFlag]=useState(false)
-const [NumberOfItemsToDisplay,setNumberOfItemsToDisplay]=useState(3)
+const [NumberOfItemsToDisplay,setNumberOfItemsToDisplay]=useState()
 const [sortFactor,setSortFactor]=useState('Depend On Difficulty')
 
 useEffect(()=>{
     const gettingData= JSON.parse(localStorage.getItem('flag'))
-    console.log('gettingData',gettingData);
+    // console.log('gettingData',gettingData);
     
-    setCompletedListFlag(gettingData==='true')
-    console.log('completedListFlag',completedListFlag);
+    setCompletedListFlag(gettingData==true)
+    // console.log('completedListFlag',completedListFlag);
 
     const gettingData2= JSON.parse(localStorage.getItem('perScreen'))
-    console.log('gettingData2',gettingData2);
+    // console.log('gettingData2',gettingData2);
     
     setNumberOfItemsToDisplay(parseInt(gettingData2) )
    
  
-    console.log("NumberOfItemsToDisplay",NumberOfItemsToDisplay);
+    // console.log("NumberOfItemsToDisplay",NumberOfItemsToDisplay);
     
  
  

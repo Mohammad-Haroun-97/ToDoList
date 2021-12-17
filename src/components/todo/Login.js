@@ -3,6 +3,7 @@
 import react, { useState, useContext } from "react";
 import {authContext} from "../../context/authContext";
 import {When} from 'react-if'
+import {Form,Input,Button, Container} from 'react-bootstrap'
 
 export default function Login() {
   const auth = useContext(authContext);
@@ -15,7 +16,18 @@ export default function Login() {
   function submitHandeler(e) {
     e.preventDefault();
 
+    
+
     auth.loginHandeler(user.username,user.password)
+    setTimeout(() => {
+        location.reload()
+    }, 3000);
+    
+   
+    
+    //   console.log('user',user);
+   
+      
   }
 
 
@@ -23,22 +35,26 @@ export default function Login() {
   function changeHandeler(e) {
     e.preventDefault();
 
-    setUser({
-      [e.target.name]: e.target.value,
-    });
+    
+        setUser({ ...user, [e.target.name]: e.target.value });
+
+    // console.log('user',user);
   }
 
   return (
     <>
     <When condition={auth.loginFlag==false}>
-      <form onSubmit={submitHandeler}>
-        <label> Username</label>
+        <Container>
+            <h5>Sign in : </h5>
+      <Form onSubmit={submitHandeler}>
+        <Form.Label> Username</Form.Label>
 
         <input type="text" name="username" onChange={changeHandeler} />
-        <label> Password</label>
+        <Form.Label> Password</Form.Label>
         <input type="password" name="password" onChange={changeHandeler} />
-        <button type="submit">Submit</button>
-      </form>
+        <Button type="submit">Submit</Button>
+      </Form>
+      </Container>
       </When>
 
       <When condition={auth.loginFlag==true}>

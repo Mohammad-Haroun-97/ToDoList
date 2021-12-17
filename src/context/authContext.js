@@ -10,13 +10,16 @@ import cookie from 'react-cookies'
 
 
 
+
 export default function Auth(props) {
     const [loginFlag,setloginFlag]=useState()
+    const [abilitiy,setAbility]=useState([])
     const [user,setUser]=useState({
         username:'',
         capabilities:[]
     })
-    user.capabilities=['read','create','update']
+
+    // user.capabilities=['read','create','update']
     // user.capabilities=['read','create']
     // user.capabilities=['create']
     // user.capabilities=['read']
@@ -24,9 +27,15 @@ export default function Auth(props) {
 
     const loginHandeler=async(username,password)=>{
 
-        // const url='https://to-do-haroun.herokuapp.com';
+        const url='';
+        console.log('response------------------');
+        const response = await superagent.post(`https://finalto-do.herokuapp.com/signin`).set('authorization', `Basic ${base64.encode(`${username}:${password}`)}`);
 
-        const response = await superagent.post(`${url}/signin`).set('authorization', `Basic ${base64.encode(`${username}:${password}`)}`);
+        // setAbility(response.body.user.capabilities)
+        // console.log('abilitiy',abilitiy);
+        // console.log('response.body.user',response.body.user.capabilities);
+
+        // console.log('000000000000000',response.body.user);
 
         validate(response.body.token)
 
@@ -41,11 +50,16 @@ export default function Auth(props) {
 
     }
 
-    const validate=(token)=>{
+    const validate=async(token)=>{
         if (token) {
+
+            const validation = await superagent.post(`https://finalto-do.herokuapp.com/signin2`).set('authorization', `Bearer ${token}`)
+            // console.log('validationvalidation',validation.body.user);
             setloginFlag(true);
-            const user= jwt.decode(token)
-            setUser(user)
+            const user1= jwt.decode(token)
+            // console.log('user1',user1);
+            setUser(validation.body.user)
+            // console.log('useruseruser',user);
            cookie.save('token',token)
 
             
@@ -65,15 +79,20 @@ export default function Auth(props) {
     const can = (capability) => {
         // chaining
         //optional chaining
+        // console.log('user.capabilities+++++++++++++',user.token);
         return user?.capabilities?.includes(capability);
     }
+    
 
 
 
     const state ={
         loginFlag:loginFlag,
+        user:user,
         loginHandeler: loginHandeler,
         logoutHandeler: logoutHandeler,
+        setUser:setUser,
+        
         can:can
 
     }

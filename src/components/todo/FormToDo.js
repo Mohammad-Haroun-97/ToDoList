@@ -13,13 +13,13 @@ export default function FormToDo(props) {
 <Form onSubmit={handleSubmit}>
   <Form.Group className="mb-3" controlId="formBasicEmail">
     <Form.Label>To Do Item</Form.Label>
-    <Form.Control size="lg"  onChange={handleChange} name="text" type="text" placeholder="Item Details" />
+    <Form.Control size="lg"  onChange={handleChange} name="task" type="text" placeholder="Item Details" />
     
   </Form.Group>
 
   <Form.Group className="mb-3" controlId="formBasicPassword">
     <Form.Label>Assigned To</Form.Label>
-    <Form.Control onChange={handleChange} name="assignee" type="text" placeholder="Assignee Name" />
+    <Form.Control onChange={handleChange} name="name" type="text" placeholder="Assignee Name" />
   </Form.Group>
   <Form.Group className="mb-3" controlId="formBasicPassword">
     <Form.Label>Difficulty</Form.Label>
