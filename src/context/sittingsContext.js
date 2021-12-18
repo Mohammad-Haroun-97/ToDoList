@@ -1,13 +1,34 @@
 
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+
 
 export const applicationContext=React.createContext()
 
+
 export default  function Settings(props) {
-const [completedListFlag,setCompletedListFlag]=useState(false)
+const [completedListFlag,setCompletedListFlag]=useState(true)
 const [HidecompletedListFlag,setHidecompletedListFlag]=useState(false)
-const [NumberOfItemsToDisplay,setNumberOfItemsToDisplay]=useState(2)
+const [NumberOfItemsToDisplay,setNumberOfItemsToDisplay]=useState()
 const [sortFactor,setSortFactor]=useState('Depend On Difficulty')
+
+useEffect(()=>{
+    const gettingData= JSON.parse(localStorage.getItem('flag'))
+    // console.log('gettingData',gettingData);
+    
+    setCompletedListFlag(gettingData==true)
+    // console.log('completedListFlag',completedListFlag);
+
+    const gettingData2= JSON.parse(localStorage.getItem('perScreen'))
+    // console.log('gettingData2',gettingData2);
+    
+    setNumberOfItemsToDisplay(parseInt(gettingData2) )
+   
+ 
+    // console.log("NumberOfItemsToDisplay",NumberOfItemsToDisplay);
+    
+ 
+ 
+ },[completedListFlag,NumberOfItemsToDisplay])
 
 
 const state={
@@ -23,6 +44,8 @@ const state={
    
 
 }
+
+
 
  
 
