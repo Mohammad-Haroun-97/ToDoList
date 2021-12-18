@@ -1,6 +1,7 @@
 {
   "name": "class-32-solution-todo",
   "version": "1.0.0",
+  "homepage": "http://Mohammad-Haroun-97.github.io/ToDoList",
   "description": "",
   "keywords": [],
   "main": "src/index.js",
@@ -30,7 +31,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "browserslist": {
     "production": [

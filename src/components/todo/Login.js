@@ -49,7 +49,7 @@ export default function Login() {
       <Form onSubmit={submitHandeler}>
         <Form.Label> Username</Form.Label>
 
-        <input type="text" name="username" onChange={changeHandeler} />
+        <input data-testid="username-input" type="text" name="username" onChange={changeHandeler} />
         <Form.Label> Password</Form.Label>
         <input type="password" name="password" onChange={changeHandeler} />
         <Button type="submit">Submit</Button>
