@@ -61,7 +61,7 @@ export default function List(props) {
             )
             .map((item) => (
               <Col>
-                <Card text={"white"} bg={"danger"} style={{ width: "18rem" }}>
+                <Card text={"white"} bg={"danger"} style={{ width: "15vw" }}>
                   <Card.Body>
                     <Card.Title>{item.task}</Card.Title>
                     <Card.Text>Assigned to:{item.name}</Card.Text>

@@ -3,13 +3,13 @@
 import react, { useState, useContext } from "react";
 import { authContext } from "../../context/authContext";
 import { When } from "react-if";
-import { Form, Input, Container } from "react-bootstrap";
+import { Form, Input, Container,Modal ,Button} from "react-bootstrap";
 
 
 import {
   Alignment,
 
-  Button,
+  
   
   Navbar,
   NavbarDivider,
@@ -20,6 +20,7 @@ import '@blueprintjs/core/lib/css/blueprint.css';
 
 export default function Login() {
   const auth = useContext(authContext);
+
 
   const [user, setUser] = useState({
     username: "",
@@ -43,12 +44,13 @@ export default function Login() {
 
   return (
     <>
-    <Navbar style={{position:'fixed', top:'0',backgroundColor:'#FFEEAD'}}> 
+    <Navbar style={{position:'fixed', top:'0',backgroundColor:'#FFEEAD',height:'7vh'}}> 
     <Navbar.Group align={Alignment.LEFT}>
-        <Navbar.Heading><When condition={auth.loginFlag == false}>
-        <Container style={{position:'fixed',top:"1vw",width:"40vw" }}>
+        <Navbar.Heading>
+          <When condition={auth.loginFlag == false}>
+        <Container style={{position:'fixed',top:".8vw",width:"40vw" }}>
           
-          <Form style={{display:'inline-block',width:"40vw"}} onSubmit={submitHandeler}>
+          <Form style={{display:'inline-block',width:"40vw",marginLeft:'5vw'}} onSubmit={submitHandeler}>
             <Form.Label style={{fontFamily: 'Lobster',fontSize:'1em',fontWeight:"500" ,marginRight:".5em"}}> Username</Form.Label>
 
             <input style={{display:'inline-block',width:"25%",marginRight:"1vw"}}
@@ -60,46 +62,24 @@ export default function Login() {
             <Form.Label style={{fontFamily: 'Lobster',fontSize:'1em',fontWeight:"500" ,marginRight:".5em"}}>  Password</Form.Label>
             <input style={{display:'inline-block',width:"25%" ,marginRight:"1vw"}} 
             type="password" name="password" onChange={changeHandeler} />
-            <Button type="submit">Log In</Button>
+            <Button variant="dark" style={{position:'fixed',top:'.4vw',left:'40vw'}} type="submit">Log In</Button>
           </Form>
         </Container>
       </When>
 
       <When condition={auth.loginFlag == true}>
-        <button onClick={auth.logoutHandeler}>LogOut</button>
-      </When></Navbar.Heading>
+        <Button variant="dark" style={{position:'fixed',top:'.4vw',left:'15vw'}} onClick={auth.logoutHandeler}>LogOut</Button>
+   
+      </When>
+      
+      </Navbar.Heading>
         
      
-        <Button style={{marginLeft:"60vw",marginRight:'1vw'}} class="bp3-button bp3-minimal"  icon="user"></Button>
-      <Button style={{marginRight:'1vw'}} class="bp3-button bp3-minimal" icon="notifications"></Button>
-      <Button style={{marginRight:'3vw'}} class="bp3-button bp3-minimal bp3-icon-cog"  icon="cog"></Button>
+      
     </Navbar.Group>
 </Navbar>
 
 
-    
-      {/* <When condition={auth.loginFlag == false}>
-        <Container>
-          <h5>Sign in : </h5>
-          <Form onSubmit={submitHandeler}>
-            <Form.Label> Username</Form.Label>
-
-            <input
-              data-testid="username-input"
-              type="text"
-              name="username"
-              onChange={changeHandeler}
-            />
-            <Form.Label> Password</Form.Label>
-            <input type="password" name="password" onChange={changeHandeler} />
-            <Button type="submit">Submit</Button>
-          </Form>
-        </Container>
-      </When>
-
-      <When condition={auth.loginFlag == true}>
-        <button onClick={auth.logoutHandeler}>LogOut</button>
-      </When> */}
     </>
   );
 }
