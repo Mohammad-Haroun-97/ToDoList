@@ -1,6 +1,11 @@
 import React,{ useState } from "react";
-import {Form,Container,Button,} from 'react-bootstrap'
+import {Form,Container,Button,Card} from 'react-bootstrap'
 import  superagent  from "superagent";
+
+
+
+
+
 
 export default function Signup() {
     const [newuser,setNewuser]=useState({})
@@ -26,38 +31,46 @@ export default function Signup() {
     
 
     return <>
-     <Container>
-         <h4>Sign Up :</h4>
+    <Container style={{width:"30vw" ,display:'inline-block',float:'left',position:'fixed',left:'5vw'}}>
+    
+         <h4 style={{fontFamily:'Lobster' ,marginBottom:'1vw',marginLeft:'5vw'}}>Sign Up :</h4>
 
-<Form onSubmit={handleSubmit}>
+<Form  class="col-md-6" onSubmit={handleSubmit}>
   <Form.Group className="mb-3" controlId="formBasicEmail">
-    <Form.Label>Username</Form.Label>
+    <Form.Label style={{fontFamily:'The Nautigal' ,fontSize:'3em',fontWeight:'700'}}>Username</Form.Label>
     <Form.Control size="lg"  onChange={handleChange} name="username" type="text" placeholder="Enter Your Username" />
     
   </Form.Group>
 
   <Form.Group className="mb-3" controlId="formBasicPassword">
-    <Form.Label>Password</Form.Label>
+    <Form.Label style={{fontFamily:'The Nautigal' ,fontSize:'3em',fontWeight:'700'}}>Password</Form.Label>
     <Form.Control onChange={handleChange} name="password" type="text" placeholder="Enter Your Password" />
   </Form.Group>
-  {/* <FloatingLabel controlId="floatingSelectGrid" label="Works with selects"> */}
-      {/* <Form.Select aria-label="Floating label select example"> */}
+
       <select name='role' onChange={handleChange}>
-        <option>Choose Your Role</option>
-        <option  name='role' value="admin">Admin</option>
-        <option  name='role' value="editor">Editor</option>
-        <option  name='role' value="writer">User</option>
+        <option style={{fontFamily:'cursive' ,fontSize:'1em',fontWeight:'200'}}>Choose Your Role</option>
+        <option style={{fontFamily:'cursive' ,fontSize:'1em',fontWeight:'200'}}  name='role' value="admin">Admin</option>
+        <option  style={{fontFamily:'cursive' ,fontSize:'1em',fontWeight:'200'}} name='role' value="editor">Editor</option>
+        <option  style={{fontFamily:'cursive' ,fontSize:'1em',fontWeight:'200'}} name='role' value="writer">User</option>
         </select>
-      {/* </Form.Select> */}
-    {/* </FloatingLabel> */}
-  <Button variant="primary" type="submit">
+
+  <Button style={{marginLeft:'2vw'}} variant="dark" type="submit">
     Submit
   </Button>
 </Form>
 </Container>
-    
-    
 
+
+<Container style={{width:'50vw',height:'50vh', display:'inline-block',float:'right',marginRight:'2vw' }}>
+
+  <Card.Img style={{width:'100%',height:'100%',objectFit:'cover' ,borderRadius:'20px'}}  variant="top" src="https://www.investintech.com/resources/blog/wp-content/uploads/2018/02/To-Do-List.png" />
+  <p style={{justifyContent:'center', textAlign:'center' ,fontFamily:'Lobster',fontSize:'1.5em'}}><span style={{fontFamily:'cursive' ,fontSize:'2em'}}> Free up your mental space </span><br/><br/>
+Regain clarity and calmness by getting all those tasks out of your head and onto your to-do list (no matter where you are or what device you use).</p>
+ 
+ {/* <Card.Text>dasdasdasdadasdad</Card.Text> */}
+
+    
+  </Container>
     </>
     
 }
