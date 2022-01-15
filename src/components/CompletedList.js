@@ -18,7 +18,7 @@ export default function CompletedListt(props) {
     return (
         
         <>
-        <h2>Completed List</h2>,
+    
         
         <Container>
 

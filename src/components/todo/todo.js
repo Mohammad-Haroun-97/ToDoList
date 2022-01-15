@@ -8,7 +8,7 @@ import { authContext } from "../../context/authContext";
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { v4 as uuid } from "uuid";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Container, Form,Modal } from "react-bootstrap";
 import { When } from "react-if";
 import Auth from "./Auth";
 import { saveCookies } from "superagent";
@@ -17,13 +17,10 @@ import Signup from "./Signup.js";
 
 // localStorage.setItem('local',{})
 const ToDo = () => {
-  // useEffect(()=>{
-  //   setTimeout(() => {
-  //     // location.reload()
+  const [show, setShow] = useState(false);
 
-  //   }, 90000);
-
-  // })
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const settings = useContext(applicationContext);
   const auth = useContext(authContext);
@@ -201,12 +198,13 @@ const ToDo = () => {
   return (
 
     <>
-    <Container>
+    
       {auth.loginFlag && (
-        <Button
+        <Button variant="dark" style={{position:'fixed',top:".4vw",zIndex:'100',left:'25vw'}}
           onClick={() => {
             setsettingFlag(true);
             setbuttonFlag(!buttonFlag);
+            setShow(true)
           }}
         >
           Settings
@@ -214,34 +212,28 @@ const ToDo = () => {
       )}
 
       {!auth.loginFlag && <Signup />}
-      <br />
-      <br />
-      <br />
+     
 
       {auth.loginFlag && (
         <header>
-          <h1>To Do List: {incomplete} items pending</h1>
+          <h1 style={{textAlign:'center',fontFamily:'lobster'}}>To Do List:<br/> <span style={{fontFamily:'cursive'}}> {incomplete} items pending</span></h1>
         </header>
       )}
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-    
+     
+   
 
-      {auth.loginFlag && buttonFlag && (
-        <Container>
-          signup
-          <Button
-            style={{ marginLeft: "50px", marginRight: "30px" }}
+      { 
+       <Modal show={show} onHide={handleClose}>
+       
+       <Modal.Body>
+       <Button
+            style={{margin:'2vw'  }}
             onClick={HideCompleted}
           >
             Hide Completed List
           </Button>
           <Button
-            style={{ paddingLeft: "50px", marginRight: "30px" }}
+            style={{ margin:'2vw'}}
             onClick={showCompletedList}
           >
             Show Completed List
@@ -249,16 +241,27 @@ const ToDo = () => {
           <br />
           <br />
           <Form onSubmit={perScreenHandeler}>
-            <Form.Label>Number Of Items Per Screen</Form.Label>
+            <Form.Label style={{margin:'auto',marginBottom:'3%',display:'block',justifyContent:'center',alignItems:'center',textAlign:'center'}}>Number Of Items Per Screen</Form.Label>
             <Form.Control
+             style={{margin:'auto',width:"30%",justifyContent:'center',alignItems:'center'}}
               type="number"
               name="itemsPerScreen"
               id="itemsPerScreen"
             />
-            <Button type="submit">Enter</Button>
+            <Button style={{margin:'auto',marginTop:'3%',display:'block',justifyContent:'center',alignItems:'center',textAlign:'center'}} type="submit">Enter</Button>
           </Form>
-        </Container>
-      )}
+       </Modal.Body>
+       <Modal.Footer style={{margin:'auto',marginTop:'3%',display:'block',justifyContent:'center',alignItems:'center',textAlign:'center'}}>
+         <Button variant="secondary" onClick={handleClose}>
+           Close
+         </Button>
+         <Button variant="primary" onClick={handleClose}>
+           Save Changes
+         </Button>
+       </Modal.Footer>
+     </Modal>
+
+    }
       <br />
       <br />
       <Auth capability="create">
@@ -268,6 +271,8 @@ const ToDo = () => {
       {settings.completedListFlag && (
         <CompletedList filterArray={filterArray} />
       )}
+
+      <Container style={{display:'block',marginTop:"70vh"}}>
 
       <Auth capability="read">
         <h2>To Do List</h2>
@@ -279,6 +284,7 @@ const ToDo = () => {
         />
       </Auth>
       </Container>
+      
     </>
   );
 };
